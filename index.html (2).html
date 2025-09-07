@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawAble - Premium Pet Bowls for Happy Pets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Trebuchet MS', sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 25px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .logo {
+            font-size: 3em;
+            font-weight: bold;
+            color: #8e44ad;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-5px); }
+            60% { transform: translateY(-3px); }
+        }
+
+        .paw-icon {
+            color: #e67e22;
+            margin: 0 8px;
+            animation: wiggle 3s infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            border: none;
+            color: white;
+            padding: 18px 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 35px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-family: inherit;
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        nav button:hover {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.4);
+        }
+
+        nav button.active {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .section {
+            display: none;
+            padding: 80px 0;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+            border-radius: 25px;
+            padding: 80px 50px;
+            margin: 50px 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 25px;
+            color: #8e44ad;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero p {
+            font-size: 1.6em;
+            margin-bottom: 40px;
+            color: #555;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            border: none;
+            padding: 25px 50px;
+            font-size: 1.4em;
+            font-weight: bold;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3); }
+            50% { box-shadow: 0 12px 35px rgba(255, 107, 107, 0.5); }
+            100% { box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3); }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.5);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+            padding: 50px 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        .feature-icon {
+            font-size: 5em;
+            margin-bottom: 25px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-card h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #8e44ad;
+        }
+
+        .feature-card p {
+            font-size: 1.3em;
+            color: #666;
+        }
+
+        .product-showcase {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+            border-radius: 25px;
+            padding: 60px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            margin: 50px 0;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .product-image {
+            width: 450px;
+            height: 350px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 25px;
+            margin: 40px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8em;
+            color: white;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            animation: productGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes productGlow {
+            from { box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3); }
+            to { box-shadow: 0 20px 50px rgba(118, 75, 162, 0.5); }
+        }
+
+        .product-details {
+            text-align: left;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .product-details h2 {
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            color: #8e44ad;
+            text-align: center;
+        }
+
+        .product-details ul {
+            font-size: 1.4em;
+            margin: 30px 0;
+            padding-left: 25px;
+        }
+
+        .product-details li {
+            margin: 15px 0;
+            color: #555;
+            padding: 5px 0;
+        }
+
+        .price {
+            font-size: 3em;
+            font-weight: bold;
+            color: #e74c3c;
+            text-align: center;
+            margin: 40px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .buy-section {
+            background: linear-gradient(45deg, #ffa500, #ff6b6b);
+            color: white;
+            padding: 50px 40px;
+            border-radius: 25px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(255, 165, 0, 0.3);
+        }
+
+        .buy-section h3 {
+            font-size: 2.2em;
+            margin-bottom: 30px;
+        }
+
+        .quantity-selector {
+            margin: 30px 0;
+        }
+
+        .quantity-selector label {
+            font-size: 1.4em;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        .quantity-selector select {
+            font-size: 1.3em;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 15px;
+            margin-right: 25px;
+            background: white;
+            color: #333;
+        }
+
+        .total-display {
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+
+        .about-content, .contact-info {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+            border-radius: 25px;
+            padding: 60px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            margin: 50px 0;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .about-content h2, .contact-info h2 {
+            font-size: 2.8em;
+            margin-bottom: 40px;
+            color: #8e44ad;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.4em;
+            margin-bottom: 25px;
+            color: #555;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-info {
+            text-align: center;
+        }
+
+        .contact-item {
+            font-size: 1.5em;
+            margin: 25px 0;
+            color: #555;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            display: inline-block;
+            min-width: 300px;
+        }
+
+        .contact-item strong {
+            color: #8e44ad;
+        }
+
+        .cart-badge {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border-radius: 50%;
+            padding: 8px 12px;
+            font-size: 1em;
+            margin-left: 15px;
+            animation: cartBounce 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes cartBounce {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        footer {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            text-align: center;
+            padding: 50px 0;
+            margin-top: 80px;
+        }
+
+        footer p {
+            font-size: 1.3em;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 182, 193, 0.3);
+            font-size: 2em;
+            animation: floatUp 6s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5em; }
+            .hero p { font-size: 1.3em; }
+            .logo { font-size: 2.2em; }
+            nav { justify-content: center; }
+            .product-image { width: 300px; height: 250px; font-size: 5em; }
+            .product-details h2 { font-size: 2.2em; }
+            .price { font-size: 2.5em; }
+            .features { grid-template-columns: 1fr; }
+            .contact-item { min-width: auto; width: 90%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="floatingHearts"></div>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    PawAble<span class="paw-icon">🐾</span>
+                </div>
+                <nav>
+                    <button onclick="showSection('home')" class="active" id="homeBtn">🏠 Home</button>
+                    <button onclick="showSection('product')" id="productBtn">🥣 Our Bowl</button>
+                    <button onclick="showSection('about')" id="aboutBtn">❤️ About Us</button>
+                    <button onclick="showSection('contact')" id="contactBtn">📞 Contact</button>
+                    <button onclick="showCart()" id="cartBtn">🛒 Cart <span class="cart-badge" id="cartBadge">0</span></button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1>Welcome to PawAble! 🐕✨</h1>
+                <p>Where every meal becomes a tail-wagging celebration! Your furry friend deserves the very best dining experience.</p>
+                <button class="cta-button" onclick="showSection('product')">🌟 Discover Our Amazing Bowl</button>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">💝</div>
+                    <h3>Crafted with Love</h3>
+                    <p>Every PawAble bowl is made with genuine care and attention to detail, ensuring your pet feels truly special at every meal.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Premium Quality</h3>
+                    <p>Built to last with the finest materials, our bowls are designed to withstand years of happy meals and excited tail wags.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏡</div>
+                    <h3>Family-Owned Business</h3>
+                    <p>We're a small, caring family business that understands the special bond between you and your beloved pet companions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Section -->
+        <section id="product" class="section">
+            <div class="product-showcase">
+                <div class="product-image">🍽️</div>
+                
+                <div class="product-details">
+                    <h2>The Perfect Pet Bowl 🌟</h2>
+                    <ul>
+                        <li>✨ Non-slip base keeps bowl perfectly in place during meals</li>
+                        <li>🧽 Easy-to-clean premium stainless steel construction</li>
+                        <li>🐕 Perfect size for both dogs and cats of all breeds</li>
+                        <li>🍽️ Completely dishwasher safe for your convenience</li>
+                        <li>💪 Rust-resistant and scratch-proof for lasting beauty</li>
+                        <li>📏 Optimal eating height promotes healthy digestion</li>
+                        <li>🎨 Beautiful design that complements any home decor</li>
+                    </ul>
+                </div>
+
+                <div class="price">Only $29.99 💕</div>
+
+                <div class="buy-section">
+                    <h3>🛒 Order Your PawAble Bowl Today!</h3>
+                    <div class="quantity-selector">
+                        <label for="quantity">🔢 Quantity:</label>
+                        <select id="quantity" onchange="updatePrice()">
+                            <option value="1">1 Bowl</option>
+                            <option value="2">2 Bowls (Perfect Pair!)</option>
+                            <option value="3">3 Bowls</option>
+                            <option value="4">4 Bowls</option>
+                            <option value="5">5 Bowls</option>
+                        </select>
+                        <span class="total-display" id="totalPrice">$29.99</span>
+                    </div>
+                    <button class="cta-button" onclick="addToCart()">🛒 Add to Cart</button>
+                    <p style="margin-top: 20px; font-size: 1.2em;">✅ Free shipping on all orders! 🚚</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="about-content">
+                <h2>About PawAble 🐾</h2>
+                <p>🏠 Welcome to PawAble, where every pet deserves a dining experience as special as they are!</p>
+                <p>❤️ We're a passionate family-owned business that began our journey when we realized our own beloved pets needed something better than ordinary bowls. After searching everywhere for the perfect feeding solution, we decided to create our own.</p>
+                <p>✨ Our premium pet bowl is thoughtfully designed with both pets and their loving owners in mind. We believe that mealtime should be a joyful, comfortable, and mess-free experience for your furry family members.</p>
+                <p>🔬 Every single bowl undergoes rigorous testing for safety, durability, and functionality because we know your pets are family, just like ours. We're not just selling a product – we're sharing our love for pets with families everywhere.</p>
+                <p>🙏 Thank you for choosing PawAble. We're truly honored and excited to become part of your pet's daily happiness!</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="contact-info">
+                <h2>Get in Touch! 📞</h2>
+                <div class="contact-item">
+                    <strong>📧 Email:</strong> hello@pawable.com
+                </div>
+                <div class="contact-item">
+                    <strong>📱 Phone:</strong> (555) PAW-ABLE
+                </div>
+                <div class="contact-item">
+                    <strong>🕒 Business Hours:</strong> Monday - Friday, 9 AM - 6 PM
+                </div>
+                <div class="contact-item">
+                    <strong>📦 Shipping:</strong> FREE shipping on every order!
+                </div>
+                <div class="contact-item">
+                    <strong>🔄 Guarantee:</strong> 30-day money-back promise
+                </div>
+                <div class="contact-item">
+                    <strong>⭐ Promise:</strong> Your pet's happiness is our priority!
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 PawAble - Making Every Mealtime Magical for Pets Everywhere! 🐾✨💕</p>
+        </div>
+    </footer>
+
+    <script>
+        let cart = [];
+        
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Remove active class from all nav buttons
+            const navButtons = document.querySelectorAll('nav button');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Add active class to clicked button
+            const buttonMap = {
+                'home': 'homeBtn',
+                'product': 'productBtn', 
+                'about': 'aboutBtn',
+                'contact': 'contactBtn'
+            };
+            if (buttonMap[sectionName]) {
+                document.getElementById(buttonMap[sectionName]).classList.add('active');
+            }
+        }
+
+        function updatePrice() {
+            const quantity = document.getElementById('quantity').value;
+            const pricePerItem = 29.99;
+            const total = (quantity * pricePerItem).toFixed(2);
+            document.getElementById('totalPrice').textContent = `$${total}`;
+        }
+
+        function addToCart() {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const pricePerItem = 29.99;
+            
+            // Add to cart
+            for(let i = 0; i < quantity; i++) {
+                cart.push({
+                    name: "PawAble Premium Pet Bowl",
+                    price: pricePerItem
+                });
+            }
+            
+            // Update cart badge
+            document.getElementById('cartBadge').textContent = cart.length;
+            
+            // Show success message
+            const messages = [
+                `🎉 Wonderful! Added ${quantity} PawAble bowl${quantity > 1 ? 's' : ''} to your cart!\n\nYour precious pet is going to absolutely LOVE their new dining experience! 🐾💕`,
+                `✨ Amazing choice! ${quantity} premium bowl${quantity > 1 ? 's' : ''} added successfully!\n\nGet ready for some very happy meal times ahead! 🥳🍽️`,
+                `💝 Perfect! Your cart now has ${quantity} beautiful bowl${quantity > 1 ? 's' : ''}!\n\nYour furry friend will feel so special! 🐕❤️`
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            alert(randomMessage);
+            
+            // Reset quantity to 1
+            document.getElementById('quantity').value = 1;
+            updatePrice();
+            
+            // Create floating hearts effect
+            createFloatingHearts();
+        }
+
+        function showCart() {
+            if(cart.length === 0) {
+                alert("🛒 Your cart is currently empty!\n\nWhy not add some PawAble bowls to make your pet extra happy? 🐾✨");
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+            const message = `🛒 Your PawAble Cart:\n\n🥣 ${cart.length} Premium Pet Bowl${cart.length > 1 ? 's' : ''}\n💰 Total: $${total}\n\n🎉 Ready to complete your order?\n📞 Call us at (555) PAW-ABLE\n📧 Email: hello@pawable.com\n\nYour pet's new favorite mealtime is just a call away! 🐾💕`;
+            
+            alert(message);
+        }
+
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('floatingHearts');
+            const hearts = ['💕', '💖', '💗', '💝', '🐾', '❤️'];
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                    heartsContainer.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 7000);
+                }, i * 100);
+            }
+        }
+
+        // Initialize floating hearts on page load
+        function initFloatingHearts() {
+            const heartsContainer = document.getElementById('floatingHearts');
+            const hearts = ['💕', '🐾'];
+            
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                    heartsContainer.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 10000);
+                }
+            }, 3000);
+        }
+
+        // Initialize
+        updatePrice();
+        initFloatingHearts();
+    </script>
+</body>
+</html>
